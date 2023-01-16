@@ -23,7 +23,7 @@ The BlockBee plugin extends OpenCart, allowing you to get paid in crypto directl
 * (ETH) Ethereum
 * (BCH) Bitcoin Cash
 * (LTC) Litecoin
-* (MATIC) Polygon
+* (XMR) Monero
 * (TRX) Tron
 * (BNB) Binance Coin
 * (USDT) USDT
@@ -76,7 +76,7 @@ For more info on our fees [click here](https://blockbee.io/fees)
 ### Installation
 
 1. Open your OpenCart admin
-2. Go to Extensions 
+2. Go to Extensions
 3. Upload the .zip file
 
 ### Configuration
@@ -89,7 +89,7 @@ For more info on our fees [click here](https://blockbee.io/fees)
 6. Select which cryptocurrencies you wish to accept
 7. Input your addresses to the cryptocurrencies you selected. This is where your funds will be sent to, so make sure the addresses are correct.
 8. Save Changes
-9. All done! 
+9. All done!
 
 ### Cronjob
 
@@ -120,10 +120,13 @@ If there's anything else you need that is not covered on those pages, please get
 The easiest and fastest way is via our live chat on our [website](https://blockbee.io) or via our [contact form](https://blockbee.io/contacts/).
 
 
-### Changelog 
+### Changelog
 
-#### 1.0
+#### 1.0.0
 * Initial release.
+
+#### 1.0.1
+* Minor fixes and improvements
 
 ### Upgrade Notice
 * No breaking changes

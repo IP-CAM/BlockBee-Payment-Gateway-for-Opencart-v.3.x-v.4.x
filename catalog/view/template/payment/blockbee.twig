@@ -38,7 +38,9 @@
                 url: 'index.php?route=extension/blockbee/payment/blockbee|sel_crypto',
                 data: $(this).serialize(),
                 success: function (res) {
+                    $('.alert-dismissible').remove();
                     $('#button-payment-method').trigger('click');
+                    
                 }
             });
         })
@@ -51,16 +53,24 @@
                 data: $('#blockbee-payment-form input:checked'),
                 dataType: 'json',
                 cache: false,
-                beforeSend: function () {
-                    $('#button-confirm').button('loading');
-                },
-                complete: function () {
-                    $('#button-confirm').button('reset');
-                },
-                success: function (json) {
+                 beforeSend: function () {
+            $('#button-confirm').prop('disabled', true).addClass('loading');
+        },
+        complete: function () {
+            $('#button-confirm').prop('disabled', false).removeClass('loading');
+        },
+                success: function (json) {                   
+            $('.alert-dismissible').remove();           
                     if (json['redirect']) {
                         location = json['redirect'];
+                    } else if (json['error']) {
+                       
+                        if (json['error']['warning']) {
+                             $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        }
                     }
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
