@@ -13,7 +13,7 @@ function check_status(ajax_url) {
             jQuery('.bb_fiat_total').html(data.fiat_remaining);
             jQuery('.bb_copy.bb_details_copy').attr('data-tocopy', data.remaining);
 
-            if (data.canceled === 1) {
+            if (data.cancelled === 1) {
                 jQuery('.bb_loader').remove();
                 jQuery('.bb_payments_wrapper').slideUp('200');
                 jQuery('.bb_payment_cancelled').slideDown('200');
@@ -39,6 +39,7 @@ function check_status(ajax_url) {
                 payment_done.addClass('done');
                 jQuery('.bb_loader').remove();
                 jQuery('.bb_payment_notification').remove();
+
                 setTimeout(function () {
                     jQuery('.bb_payments_wrapper').slideUp('200');
                     jQuery('.bb_payment_processing').slideUp('200');

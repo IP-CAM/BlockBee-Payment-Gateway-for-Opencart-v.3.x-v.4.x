@@ -1,23 +1,22 @@
 <?php
-namespace Opencart\Admin\Controller\Extension\BlockBee\Payment;
 
-use Opencart\System\Engine\Config;
-
-class BlockBee extends \Opencart\System\Engine\Controller
+class ControllerExtensionPaymentBlockBee extends Controller
 {
-    private $error = [];
+
+    private $error = array();
 
     public function index()
     {
-        require(DIR_EXTENSION . 'blockbee/system/library/blockbee.php');
+        require_once(DIR_SYSTEM . 'library/blockbee.php');
 
-        $this->load->language('extension/blockbee/payment/blockbee');
+        $this->load->language('extension/payment/blockbee');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('extension/blockbee/payment/blockbee');
+        $this->load->model('setting/setting');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+
 
             $a = [];
             if (isset($_POST['payment_blockbee_cryptocurrencies'])) {
@@ -88,14 +87,14 @@ class BlockBee extends \Opencart\System\Engine\Controller
             'href' => $this->url->link('extension/payment/blockbee', 'user_token=' . $this->session->data['user_token'], true)
         );
 
-        $data['action'] = $this->url->link('extension/blockbee/payment/blockbee', 'user_token=' . $this->session->data['user_token']);
-        $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
+        $data['action'] = $this->url->link('extension/payment/blockbee', 'user_token=' . $this->session->data['user_token'], true);
+        $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true);
 
         /**
          * Defining Cryptocurrencies
          */
 
-        $supported_coins = \Opencart\Extension\BlockBee\System\Library\BlockBeeHelper::get_supported_coins();
+        $supported_coins = BlockBeeHelper::get_supported_coins();
 
         $data['payment_blockbee_cryptocurrencies_array'] = $supported_coins;
 
@@ -105,6 +104,7 @@ class BlockBee extends \Opencart\System\Engine\Controller
             $data['payment_blockbee_cryptocurrencies'] = $this->config->get('payment_blockbee_cryptocurrencies');
         }
 
+        
         if (isset($this->request->post['payment_blockbee_disable_conversion'])) {
             $data['payment_blockbee_disable_conversion'] = $this->request->post['payment_blockbee_disable_conversion'];
         } else {
@@ -208,53 +208,42 @@ class BlockBee extends \Opencart\System\Engine\Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('extension/blockbee/payment/blockbee', $data));
+        $this->response->setOutput($this->load->view('extension/payment/blockbee', $data));
+    }
+
+    public function install()
+    {
+        $this->load->model('extension/payment/blockbee');
+        // Create order database if doesn't exist
+        $this->model_extension_payment_blockbee->install();
+
+        // Set Events
+        $this->load->model('setting/event');
+        $this->model_setting_event->addEvent('blockbee_after_purchase', 'catalog/view/common/success/after', 'extension/payment/blockbee/after_purchase');
+        $this->model_setting_event->addEvent('blockbee_order_info', 'admin/view/sale/order_info/before', 'extension/payment/blockbee/order_info');
+        $this->model_setting_event->addEvent('blockbee_order_button', 'catalog/view/account/order_info/before', 'extension/payment/blockbee/order_pay_button');
     }
 
     public function order_info(&$route, &$data, &$output)
     {
         $order_id = $this->request->get['order_id'];
-        $this->load->model('extension/blockbee/payment/blockbee');
-        $order = $this->model_extension_blockbee_payment_blockbee->getOrder($order_id);
+        $this->load->model('extension/payment/blockbee');
+        $order = $this->model_extension_payment_blockbee->getOrder($order_id);
         if ($order) {
             $metaData = $order['response'];
-
             if (!empty($metaData)) {
                 $metaData = json_decode($metaData, true);
-                $fields = '';
+                $fields = [];
                 foreach ($metaData as $key => $val) {
-                    if ($key === 'blockbee_qrcode_value' || $key === 'blockbee_qrcode') {
-                        $fields .= '<tr><td>' . $key . '</td><td style="line-break: anywhere"><img width="100" class="img-fluid" src="data:image/png;base64,' . $val . '"/></td></tr>';
-                    } else if ($key === 'blockbee_history') {
-                        $history = json_decode($val);
-                        $historyObj = '<table class="table table-bordered">';
-                        foreach ($history as $h_key => $h_val) {
-                            $historyObj .= '<tr><td colspan="2"><strong>UUID:</strong> ' . $h_key . '</td>';
-                            foreach ($h_val as $hrow_key => $hrow_value) {
-                                $historyObj .= '<tr><td>' . $hrow_key . '</td><td>' . $hrow_value . '</td>';
-                            }
-                            $historyObj .= '</tr>';
-                        }
-                        $historyObj .= '</table>';
-                        $fields .= '<tr><td>' . $key . '</td><td>' . $historyObj . '</td></tr>';
-                    } else if ($key === 'blockbee_last_price_update' || $key === 'blockbee_order_timestamp') {
-                        $fields .= '<tr><td>' . $key . '</td><td style="line-break: anywhere">' . date('d-m-Y H:i:s', (int)$val) . '</td></tr>';
-                    } else {
-                        $fields .= '<tr><td>' . $key . '</td><td style="line-break: anywhere">' . $val . '</td></tr>';
-                    }
+                    $field = ['name' => $key, 'value' => $val];
+                    $fields[] = $field;
                 }
-
-                if ($data['tabs'][0]['code'] === 'blockbee') {
-                    $data['tabs'][0]['content'] = '<table style="font-size: 13px;" class="table table-bordered">' . $fields . '<table>';
+                if (isset($data['payment_custom_fields']) && is_array($data['payment_custom_fields'])) {
+                    $data['payment_custom_fields'] = array_merge($data['payment_custom_fields'], $fields);
+                } else {
+                    $data['payment_custom_fields'] = $fields;
                 }
             }
         }
-    }
-
-    public function install(): void
-    {
-        $this->load->model('extension/blockbee/payment/blockbee');
-
-        $this->model_extension_blockbee_payment_blockbee->install();
     }
 }

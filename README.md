@@ -1,12 +1,15 @@
 [<a href="https://blockbee.io/"><img src="https://blockbee.io/static/assets/images/blockbee_logo_nospaces.png" width="300"/></a>](image.png)
 
 # BlockBee Payment Gateway for OpenCart
+
 Accept cryptocurrency payments on your OpenCart store
 
 ### Requirements:
 
 ```
-OpenCart >= 4.0
+OpenCart >= 3.0
+OpenCart < 4.0
+
 ```
 
 ### Description
@@ -19,17 +22,16 @@ The BlockBee plugin extends OpenCart, allowing you to get paid in crypto directl
 
 = Accepted cryptocurrencies & tokens include: =
 
-* (BTC) Bitcoin
-* (ETH) Ethereum
-* (BCH) Bitcoin Cash
-* (LTC) Litecoin
-* (XMR) Monero
-* (TRX) Tron
-* (BNB) Binance Coin
-* (USDT) USDT
-* (SHIB) Shiba Inu
-* (DOGE) Dogecoin
-
+- (BTC) Bitcoin
+- (ETH) Ethereum
+- (BCH) Bitcoin Cash
+- (LTC) Litecoin
+- (MATIC) Polygon
+- (TRX) Tron
+- (BNB) Binance Coin
+- (USDT) USDT
+- (SHIB) Shiba Inu
+- (DOGE) Dogecoin
 
 among many others, for a full list of the supported cryptocurrencies and tokens, check [this page](https://blockbee.io/fees/).
 
@@ -41,26 +43,26 @@ Exchange rates are fetched every 5 minutes from CoinGecko.
 
 Supported currencies for automatic exchange rates are:
 
-* (XAF) CFA Franc
-* (RON) Romanian Leu
-* (BGN) Bulgarian Lev
-* (HUF) Hungarian Forint
-* (CZK) Czech Koruna
-* (PHP) Philippine Peso
-* (PLN) Poland Zloti
-* (UGX) Uganda Shillings
-* (MXN) Mexican Peso
-* (INR) Indian Rupee
-* (HKD) Hong Kong Dollar
-* (CNY) Chinese Yuan
-* (BRL) Brazilian Real
-* (DKK) Danish Krone
-* (AED) UAE Dirham
-* (JPY) Japanese Yen
-* (CAD) Canadian Dollar
-* (GBP) GB Pound
-* (EUR) Euro
-* (USD) US Dollar
+- (XAF) CFA Franc
+- (RON) Romanian Leu
+- (BGN) Bulgarian Lev
+- (HUF) Hungarian Forint
+- (CZK) Czech Koruna
+- (PHP) Philippine Peso
+- (PLN) Poland Zloti
+- (UGX) Uganda Shillings
+- (MXN) Mexican Peso
+- (INR) Indian Rupee
+- (HKD) Hong Kong Dollar
+- (CNY) Chinese Yuan
+- (BRL) Brazilian Real
+- (DKK) Danish Krone
+- (AED) UAE Dirham
+- (JPY) Japanese Yen
+- (CAD) Canadian Dollar
+- (GBP) GB Pound
+- (EUR) Euro
+- (USD) US Dollar
 
 If your OpenCart's currency is none of the above, the exchange rates will default to USD.
 If you're using OpenCart in a different currency not listed here and need support, please [contact us](https://blockbee.io) via our live chat.
@@ -76,7 +78,7 @@ For more info on our fees [click here](https://blockbee.io/fees)
 ### Installation
 
 1. Open your OpenCart admin
-2. Go to Extensions 
+2. Go to Extensions
 3. Upload the .zip file
 
 ### Configuration
@@ -89,11 +91,11 @@ For more info on our fees [click here](https://blockbee.io/fees)
 6. Select which cryptocurrencies you wish to accept
 7. Input your addresses to the cryptocurrencies you selected. This is where your funds will be sent to, so make sure the addresses are correct.
 8. Save Changes
-9. All done! 
+9. All done!
 
 ### Cronjob
 
-<!-- Some features require a cronjob to work. You need to create one in your hosting that runs every 1 minute. It should call this URL ``YOUR-DOMAIN/index.php?route=extension/cryptapi/payment/cryptapi|cron``. -->
+Some features require a cronjob to work. You need to create one in your hosting that runs every 1 minute. It should call this URL `YOUR-DOMAIN/index.php?route=extension/payment/blockbee/cron`
 
 ### Frequently Asked Questions
 
@@ -119,11 +121,12 @@ If there's anything else you need that is not covered on those pages, please get
 
 The easiest and fastest way is via our live chat on our [website](https://blockbee.io) or via our [contact form](https://blockbee.io/contacts/).
 
-
-### Changelog 
+### Changelog
 
 #### 1.0
-* Initial release.
+
+- Initial release.
 
 ### Upgrade Notice
-* No breaking changes
+
+- No breaking changes

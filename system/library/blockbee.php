@@ -1,9 +1,7 @@
 <?php
-namespace Opencart\Extension\BlockBee\System\Library;
-
 class BlockBeeHelper
 {
-  
+
     private static $base_url = "https://api.blockbee.io";
     private $payment_address = null;
     private $callback_url = null;
@@ -31,7 +29,7 @@ class BlockBeeHelper
 
         $api_key = $this->api_key;
 
-        if (empty($api_key) ) {
+        if (empty($api_key)) {
             return null;
         }
 
@@ -41,11 +39,11 @@ class BlockBeeHelper
             $callback_url = "{$this->callback_url}?{$req_parameters}";
         }
         $bb_params = [
-                  'apikey' => $api_key,
-                  'callback' => $callback_url,
-                  'pending' => $this->pending,
-                  'convert' => 1,
-              ];
+            'apikey' => $api_key,
+            'callback' => $callback_url,
+            'pending' => $this->pending,
+            'convert' => 1,
+        ];
 
         $response = BlockBeeHelper::_request($this->coin, 'create', $bb_params);
 
@@ -57,7 +55,8 @@ class BlockBeeHelper
 
         return null;
     }
-    
+
+
     public function checklogs()
     {
 
@@ -176,8 +175,8 @@ class BlockBeeHelper
         $params = [];
 
         if (!empty($apikey)) {
-          $params['apikey'] = $apikey;
-      }
+            $params['apikey'] = $apikey;
+        }
         if (empty($coin)) {
             $params['prices'] = '0';
         }
@@ -213,9 +212,7 @@ class BlockBeeHelper
         }
 
         foreach ($params as &$val) {
-            //if(is_string($val)) {
-                $val = trim($val);
-            //}
+            $val = trim($val);
         }
 
         return $params;
@@ -279,7 +276,7 @@ class BlockBeeHelper
         return $answer;
     }
 
-    public static function calc_order($history, $total, $total_fiat): array
+    public static function calc_order($history, $total, $total_fiat)
     {
         $already_paid = 0;
         $already_paid_fiat = 0;

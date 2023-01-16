@@ -1,7 +1,7 @@
 <?php
 
 // Text
-$_['text_title'] = 'Cryptocurrency' . ' <img src="' . HTTP_SERVER . 'image/catalog/blockbee/payment.png" alt="blockbee" style="height:23px" />';
+$_['text_title'] = 'Cryptocurrency' . ' <img src="' . HTTPS_SERVER . 'image/catalog/blockbee/payment.png" alt="blockbee" style="height:23px" />';
 $_['text_legend'] = 'Pay with cryptocurrency';
 $_['text_basket'] = 'Basket';
 $_['text_checkout'] = 'Checkout';
@@ -14,16 +14,22 @@ $_['text_paywith'] = 'Pay with';
 $_['text_notice'] = 'Notice';
 $_['text_moment'] = 'a moment';
 
+$_['error_payment']  = 'Payment error: %s!';
+$_['value_minim']  = 'Value too low, minimum is';
+$_['error_coin']  = 'No cryptocurrency selected for payment';
+$_['error_apikey']  = 'Insufficient store owner details for payment';
+$_['error_adress']  = 'This cryptocurrency cannot be used for payment at this time';
+
 $_['button_pay'] = 'Pay now';
 
-$_['branding_logo'] = '<img src="' . HTTP_SERVER . 'image/catalog/blockbee/payment_success.png" alt="blockbee" style="width:122px;" />';
+$_['branding_logo'] = '<img src="' . HTTPS_SERVER . 'image/catalog/blockbee/payment_success.png" alt="blockbee" style="width:122px;" />';
 $_['wallet_text'] = 'WALLET';
 $_['qr_code_text_open'] = 'Open QR CODE';
 $_['qr_code_text_close'] = 'Close QR CODE';
 
 $_['qrcode_show_text'] = 'Show the QR code';
 $_['qrcode_button_noamount_text'] = 'ADDRESS';
-$_['qrcode_button_amount_text'] = 'WITH AMMOUNT';
+$_['qrcode_button_amount_text'] = 'WITH AMOUNT';
 $_['qrcode_alt_value_text'] = 'QR Code with value';
 $_['qrcode_alt_text'] = 'QR Code without value';
 $_['qrcode_alt_show_text'] = 'Show QR Code without value';

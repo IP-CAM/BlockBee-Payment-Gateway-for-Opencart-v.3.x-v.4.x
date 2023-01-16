@@ -1,11 +1,10 @@
 <?php
-namespace Opencart\Catalog\Model\Extension\BlockBee\Payment;
 
-class BlockBee extends \Opencart\System\Engine\Model
+class ModelExtensionPaymentBlockBee extends Model
 {
-    public function getMethod(array $address): array
+    public function getMethod($address, $total)
     {
-        $this->load->language('extension/blockbee/payment/blockbee');
+        $this->load->language('extension/payment/blockbee');
 
         if ($this->config->get('payment_blockbee_status')) {
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
@@ -29,8 +28,8 @@ class BlockBee extends \Opencart\System\Engine\Model
         if ($status) {
             $method_data = array(
                 'code' => 'blockbee',
-                'title' => $this->config->get('payment_blockbee_title'),
-                'terms' => 'cryptocurrency',
+                'title' => $this->language->get('text_title'),
+                'terms' => '',
                 'sort_order' => $this->config->get('payment_blockbee_sort_order')
             );
         }
@@ -79,18 +78,6 @@ class BlockBee extends \Opencart\System\Engine\Model
         return implode('', $nonce);
     }
 
-    public function getOrder($order_id): array
-    {
-        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "blockbee_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-
-        if ($qry->num_rows) {
-            $order = $qry->row;
-            return $order;
-        } else {
-            return [];
-        }
-    }
-
     public function getOrders()
     {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` INNER JOIN `" . DB_PREFIX . "order_history` WHERE `" . DB_PREFIX . "order`.order_id=`" . DB_PREFIX . "order_history`.order_id AND `" . DB_PREFIX . "order`.payment_code ='blockbee' AND `" . DB_PREFIX . "order`.order_status_id=1");
@@ -104,7 +91,6 @@ class BlockBee extends \Opencart\System\Engine\Model
 
     public function getPaymentData($order_id)
     {
-
         $qry = $this->db->query('select response FROM ' . DB_PREFIX . 'blockbee_order WHERE order_id=' . (int)($order_id));
         if ($qry->num_rows) {
             $row = $qry->row;
@@ -141,6 +127,17 @@ class BlockBee extends \Opencart\System\Engine\Model
             $paymentData = json_encode($metaData);
 
             $this->db->query("UPDATE " . DB_PREFIX . "blockbee_order SET response = '" . $this->db->escape($paymentData) . "' WHERE order_id = '" . (int)$order_id . "'");
+        }
+    }
+
+    public function getOrder($order_id) {
+        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "blockbee_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+
+        if ($qry->num_rows) {
+            $order = $qry->row;
+            return $order;
+        } else {
+            return false;
         }
     }
 }
