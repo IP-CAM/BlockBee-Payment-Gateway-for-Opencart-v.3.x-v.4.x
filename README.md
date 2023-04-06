@@ -126,7 +126,10 @@ The easiest and fastest way is via our live chat on our [website](https://blockb
 * Initial release.
 
 #### 1.0.1
-* Minor fixes and improvements
+* Minor fixes and improvements.
+
+#### 1.0.2
+* Minor bugfixes.
 
 ### Upgrade Notice
 * No breaking changes
