@@ -129,6 +129,9 @@ The easiest and fastest way is via our live chat on our [website](https://blockb
 #### 1.0.1
 * Minor bugfixes
 
+#### 1.0.2
+* Minor bugfixes
+
 ### Upgrade Notice
 
 - No breaking changes

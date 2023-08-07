@@ -504,6 +504,10 @@ class ControllerExtensionPaymentBlockBee extends Controller
 
         $metaData = json_decode($this->model_extension_payment_blockbee->getPaymentData($order['order_id']), true);
 
+        if ($data["coin"] !== $metaData['blockbee_currency']) {
+            die("*ok*");
+        }
+
         if ($this->isOrderPaid($order) || $data['nonce'] !== $metaData['blockbee_nonce']) {
             die("*ok*");
         }
