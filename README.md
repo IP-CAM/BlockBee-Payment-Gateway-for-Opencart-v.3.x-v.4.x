@@ -23,7 +23,7 @@ The BlockBee plugin extends OpenCart, allowing you to get paid in crypto directl
 * (ETH) Ethereum
 * (BCH) Bitcoin Cash
 * (LTC) Litecoin
-* (XMR) Monero
+* (MATIC) Matic
 * (TRX) Tron
 * (BNB) Binance Coin
 * (USDT) USDT
@@ -129,6 +129,9 @@ The easiest and fastest way is via our live chat on our [website](https://blockb
 * Minor fixes and improvements.
 
 #### 1.0.2
+* Minor bugfixes.
+
+#### 1.0.3
 * Minor bugfixes.
 
 ### Upgrade Notice
