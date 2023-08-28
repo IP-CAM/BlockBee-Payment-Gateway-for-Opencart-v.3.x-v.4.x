@@ -441,6 +441,24 @@
                                                     {% endif %}
                                             >{{ never }}
                                             </option>
+                                            <option value="900"
+                                                    {% if payment_blockbee_order_cancelation_timeout == '900' %}
+                                                        selected="selected"
+                                                    {% endif %}
+                                            >{{ fifteen_minutes_cancellation }}
+                                            </option>
+                                            <option value="1800"
+                                                    {% if payment_blockbee_order_cancelation_timeout == '1800' %}
+                                                        selected="selected"
+                                                    {% endif %}
+                                            >{{ thirty_minutes_cancellation }}
+                                            </option>
+                                            <option value="2700"
+                                                    {% if payment_blockbee_order_cancelation_timeout == '2700' %}
+                                                        selected="selected"
+                                                    {% endif %}
+                                            >{{ forty_five_minutes_cancellation }}
+                                            </option>
                                             <option value="3600"
                                                     {% if payment_blockbee_order_cancelation_timeout is empty or payment_blockbee_order_cancelation_timeout == '3600' %}
                                                         selected="selected"
@@ -454,7 +472,7 @@
                                             >{{ six_hours }}
                                             </option>
                                             <option value="43200"
-                                                    {% if payment_blockbee_order_cancelation_timeout == '21600' %}
+                                                    {% if payment_blockbee_order_cancelation_timeout == '43200' %}
                                                         selected="selected"
                                                     {% endif %}
                                             >{{ twelve_hours }}
@@ -534,22 +552,22 @@
                                 <div class="col-12 text-center" style="margin-bottom: 20px">
                                     <label class="control-label text-center" style="float: none !important;">
                                         {{ entry_cryptocurrencies }}
-                                    </label>                                    
+                                    </label>
                                 </div>
-                                <div class="col-sm-4 center">                               
+                                <div class="col-sm-4 center">
                                     <input type="hidden" id="blockbee_cryptocurrencies_array_cache" name="payment_blockbee_cryptocurrencies_array_cache"
                                     value='{{ payment_blockbee_cryptocurrencies_array|json_encode() }}'>
-                                    
+
                                         <select name="payment_blockbee_cryptocurrencies[]" multiple="multiple" size="10" id="payment_cry" class="form-select">
                                                 {% for ticker, coin in payment_blockbee_cryptocurrencies_array %}
                                                 <option value='{{ ticker }}'
                                                     {{ payment_blockbee_cryptocurrencies[ticker]  is defined and payment_blockbee_cryptocurrencies[ticker]  == ticker ? 'selected="selected"' : '' }}
                                                     >{{ coin['name'] }}
                                                 </option>
-                                                {% endfor %}                                            
-                                        </select>                                        
-                                    
-                                </div>        
+                                                {% endfor %}
+                                        </select>
+
+                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12">
